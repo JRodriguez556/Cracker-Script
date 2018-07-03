@@ -22,7 +22,7 @@ filetype() {
 }
 
 hashcatfile() {
-  echo "Please input the ABSOULTE path to the file you want cracked. (/full/path)"
+  echo "Please input the path to the file you want cracked. (/full/path)"
   read -r hashcatfilelocation
   echo "What is the hashtype value (-m XXXX)?"
   sleep 1
