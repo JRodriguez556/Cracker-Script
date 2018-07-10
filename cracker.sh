@@ -33,7 +33,7 @@ hashcatfile() {
   echo "3000 : LM"
   read -r hashtype
   start=$(date +"%H:%M::%m-%d-%Y")
-  echo "Attempting to crack, output file is at ./$hashcatfilelocation.cracked.$start"
+  echo "Attempting to crack, output file is at $hashcatfilelocation.cracked.$start"
   echo "Starting"
   sleep 5
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -w 3
@@ -44,9 +44,9 @@ hashcatfile() {
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/leetspeak.rule -w 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/unix-ninja-leetspeak.rule -w 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/* -w 3 -a 3
-  /tools/hashcat/hashcat64.bin -m "$hashtype" --username --show -o ./"$hashcatfilelocation".cracked."$start" --outfile-format 3 "$hashcatfilelocation"
+  /tools/hashcat/hashcat64.bin -m "$hashtype" --username --show -o "$hashcatfilelocation".cracked."$start" --outfile-format 3 "$hashcatfilelocation"
   end=$(date +"%H:%M::%m-%d-%Y")
-  echo "Done Cracking, output file is at ./$hashcatfilelocation.cracked.$start"
+  echo "Done Cracking, output file is at $hashcatfilelocation.cracked.$start"
   echo "Started at $start"
   echo "Ended at $end"
 }
