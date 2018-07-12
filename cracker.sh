@@ -25,17 +25,17 @@ hashcatfile() {
   echo "Please input the path to the file you want cracked. (/full/path)"
   read -r hashcatfilelocation
   echo "What is the hashtype value (-m XXXX)?"
-  sleep 1
   echo "1000 : NTLM"
   echo "5600 : NetNTLM (Responder)"
   echo "7300 : IPMI"
   echo "2500 : WPA/WPA2"
   echo "3000 : LM"
   read -r hashtype
-  start=$(date +"%H:%M::%m-%d-%Y")
-  echo "Attempting to crack, output file is at $hashcatfilelocation.cracked.$start"
+  start=$(date +"%m-%d-%Y::%H:%M")
+  echo "Attempting to crack"
   echo "Starting"
-  sleep 5
+  echo "Use 'q' to quit rules/masks you want skipped."
+  sleep 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -w 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/best64.rule -w 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/d3ad0ne.rule -w 3
@@ -43,10 +43,11 @@ hashcatfile() {
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/combinator.rule -w 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/leetspeak.rule -w 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/unix-ninja-leetspeak.rule -w 3
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/ALL.ALL -w 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/* -w 3 -a 3
   /tools/hashcat/hashcat64.bin -m "$hashtype" --username --show -o "$hashcatfilelocation".cracked."$start" --outfile-format 3 "$hashcatfilelocation"
-  end=$(date +"%H:%M::%m-%d-%Y")
-  echo "Done Cracking, output file is at $hashcatfilelocation.cracked.$start"
+  end=$(date +"%m-%d-%Y::%H:%M")
+  echo "Done Cracking, output file is at $hashcatfilelocation.cracked.start.$start.end.$end"
   echo "Started at $start"
   echo "Ended at $end"
 }
