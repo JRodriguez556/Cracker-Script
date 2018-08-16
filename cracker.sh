@@ -49,8 +49,8 @@ hashcatfile() {
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/ALL.ALL -w 3
   echo "RUNNING ALL MAKS, THIS WILL TAKE A LONG TIME, PRESS 'q' to SKIP..."
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/* -w 3 -a 3
-  /tools/hashcat/hashcat64.bin -m "$hashtype" --username --show -o "$hashcatfilelocation".cracked."$start" --outfile-format 3 "$hashcatfilelocation"
   end=$(date +"%m-%d-%Y::%H:%M")
+  /tools/hashcat/hashcat64.bin -m "$hashtype" --username --show -o "$hashcatfilelocation".cracked.start."$start".end."$end" --outfile-format 3 "$hashcatfilelocation"
   echo "Done Cracking, output file is at $hashcatfilelocation.cracked.start.$start.end.$end"
   echo "Started at $start"
   echo "Ended at $end"
