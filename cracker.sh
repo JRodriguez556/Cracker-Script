@@ -26,6 +26,7 @@ hashcatfile() {
   read -r hashcatfilelocation
   echo "What is the hashtype value (-m XXXX)?"
   echo "1000 : NTLM"
+  echo "5500 : NetNTLM (Hostapd-WPE)"
   echo "5600 : NetNTLM (Responder)"
   echo "7300 : IPMI"
   echo "2500 : WPA/WPA2"
