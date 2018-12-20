@@ -22,7 +22,7 @@ getdomains() {
   n=0
   for suffix in $available_domains; do
     n=$((n+1))
-    echo "'$n'qwed:$suffix" >> domains.list.del
+    echo "'$n'uniqselectorforreasons:$suffix" >> domains.list.del
   done
   #have user select from list
   cat domains.list.del
@@ -30,7 +30,7 @@ getdomains() {
   read -r selected_domains
   for i in $(echo $selected_domains | sed "s/,/ /g")
   do
-    grep "'$i'qwed" domains.list.del | cut -f2 -d: >> selected.domains.del
+    grep "'$i'uniqselectorforreasons" domains.list.del | cut -f2 -d: >> selected.domains.del
   done
   #grep domain file to hashfile
   cat $hashcatfilelocation.no.machine.accounts.del | grep -f selected.domains.del > $hashcatfilelocation.targeted.domains.del
@@ -96,7 +96,7 @@ echo "Please input the path to the file you want cracked. (/full/path)"
 read -r hashcatfilelocation
 fileclean
 getdomains
-#gethashtype
-#cracklm
-#crackntlm
+gethashtype
+cracklm
+crackntlm
 makedatafolder
