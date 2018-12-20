@@ -2,7 +2,7 @@
 #todo
 #add stats
 #add check for lm hashes
-#decode hex
+#change file names
 
 makedatafolder() {
   mkdir crackdata
