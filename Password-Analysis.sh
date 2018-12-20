@@ -52,7 +52,7 @@ cracklm() {
  echo "$start_time" > lm.start.time.del
  /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /wordlists/* -w 3 --session "$hashcatfilelocation".lm.hashes.restore.1
  /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".lm.hashes.restore.2
- /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".lm.hashes.restore.3
+ #/tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".lm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
  echo $"end_time" > lm.end.time.del
 }
