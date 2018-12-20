@@ -18,7 +18,6 @@ fileclean() {
 
 getdomains() {
   cat $hashcatfilelocation.no.machine.accounts.del | grep -F \\ | sort -u -t\\ -k1,1 | cut -f1 -d\\ >> $hashcatfilelocation.domain.select.del
-  #generate list of domains
   available_domains=`cat $hashcatfilelocation.domain.select.del`
   n=0
   for suffix in $available_domains; do
@@ -31,7 +30,7 @@ getdomains() {
   read -r selected_domains
   for i in $(echo $selected_domains | sed "s/,/ /g")
   do
-    grep $i domains.list.del | cut -f2 -d: >> selected.domains.del
+    grep "$i" domains.list.del | cut -f2 -d: >> selected.domains.del
   done
   #grep domain file to hashfile
   cat $hashcatfilelocation.no.machine.accounts.del | grep -f selected.domains.del > $hashcatfilelocation.targeted.domains.del
@@ -54,7 +53,7 @@ cracklm() {
  /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".lm.hashes.restore.2
  #/tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".lm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
- echo $"end_time" > lm.end.time.del
+ echo "$end_time" > lm.end.time.del
 }
 
 crackntlm() {
@@ -64,7 +63,7 @@ crackntlm() {
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes.del /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.2
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes.del /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
- echo $"end_time" > ntlm.end.time.del
+ echo "$end_time" > ntlm.end.time.del
 }
 
 lmstats() {
@@ -97,7 +96,7 @@ echo "Please input the path to the file you want cracked. (/full/path)"
 read -r hashcatfilelocation
 fileclean
 getdomains
-gethashtype
-cracklm
-crackntlm
+#gethashtype
+#cracklm
+#crackntlm
 makedatafolder
