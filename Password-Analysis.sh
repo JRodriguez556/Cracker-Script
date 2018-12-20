@@ -97,8 +97,8 @@ totalstats() {
 #printstats() {
 #  #print all stats for user
 # }
-
-filename
+echo "Please input the path to the file you want cracked. (/full/path)"
+read -r hashcatfilelocation
 fileclean
 getdomains
 gethashtype
