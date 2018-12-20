@@ -106,10 +106,10 @@ gethashtype
 lmhashcount=$(< total.lm.hashes.del)
 if ((lmhashcount > 0)); then
                 cracklm
+                lmstats
         else
                 echo NO LM HASHES
 fi
 crackntlm
-lmstats
 ntlmstats
 makedatafolder
