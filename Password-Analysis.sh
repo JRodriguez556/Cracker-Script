@@ -86,11 +86,11 @@ totalstats() {
   paste cracked.lm.hashes cracked.ntlm.hashes | awk '{print ($1 + $2)}' > total.cracked.hashes
 }
 
-getwordlist(){
+getwordlist() {
   #generate wordlist for pipal
  }
  
-pipalstats(){
+pipalstats() {
   #run wordlist through pipal
  }
 
