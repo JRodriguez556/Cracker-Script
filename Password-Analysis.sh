@@ -1,4 +1,8 @@
 #!/bin/bash
+#todo
+#add stats
+#add check for lm hashes
+
 makedatafolder() {
   mkdir crackdata
   rm domains.list.del
@@ -92,6 +96,7 @@ totalstats() {
 #printstats() {
 #  #print all stats for user
 # }
+
 echo "Please input the path to the file you want cracked. (/full/path)"
 read -r hashcatfilelocation
 fileclean
