@@ -103,8 +103,12 @@ read -r hashcatfilelocation
 fileclean
 getdomains
 gethashtype
-#check if lm exists
-cracklm
+lmhashcount=$(< total.lm.hashes.del)
+if ((lmhashcount > 0)); then
+                cracklm
+        else
+                echo NO LM HASHES
+fi
 crackntlm
 lmstats
 ntlmstats
