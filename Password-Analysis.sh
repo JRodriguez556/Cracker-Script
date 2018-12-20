@@ -52,21 +52,38 @@ gethashtype(){
 }
 
 cracklm() {
-  /tools/hashcat/hashcat64.bin -m  "$hashcatfilelocation" /wordlists/* -w 3 --session "$hashcatfilelocation".restore.1 
+ start_time=$(date +"%m-%d-%Y::%H:%M")
+ echo "$start_time" > lm.start.time
+ /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes /wordlists/* -w 3 --session "$hashcatfilelocation".lm.hashes.restore.1
+ /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".lm.hashes.restore.2
+ /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".lm.hashes.restore.3
+ end_time=$(date +"%m-%d-%Y::%H:%M")
+ echo $"end_time" > lm.end.time
 }
 
-
 crackntlm() {
-  #crack all ntlm
+ start_time=$(date +"%m-%d-%Y::%H:%M")
+ echo "$start_time" > ntlm.start.time 
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes /wordlists/* -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.1
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.2
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
+ end_time=$(date +"%m-%d-%Y::%H:%M")
+ echo $"end_time" > ntlm.end.time
 }
 
 lmstats() {
-  #get lm cracked stats
+  /tools/hashcat/hashcat64.bin -m 3000 --username --show -o "$hashcatfilelocation".lm.hashes.cracked --outfile-format 3 "$hashcatfilelocation".lm.hashes
+  cat "$hashcatfilelocation".lm.hashes.cracked | wc -l > cracked.lm.hashes
 }
 
 
 ntlmstats() {
-  #get ntlm stats
+  /tools/hashcat/hashcat64.bin -m 1000 --username --show -o "$hashcatfilelocation".ntlm.hashes.cracked --outfile-format 3 "$hashcatfilelocation".ntlm.hashes
+  cat "$hashcatfilelocation".ntlm.hashes.cracked | wc -l > cracked.ntlm.hashes
+}
+
+totalstats() {
+  paste cracked.lm.hashes cracked.ntlm.hashes | awk '{print ($1 + $2)}' > total.cracked.hashes
 }
 
 getwordlist(){
@@ -80,32 +97,10 @@ pipalstats(){
 printstats() {
   #print all stats for user
  }
-hashcat() {
-  echo "Please input the path to the file you want cracked. (/full/path)"
-  read -r hashcatfilelocation
-  start=$(date +"%m-%d-%Y::%H:%M")
-  echo "Attempting to crack"
-  echo "Starting"
-  echo "Use 'q' to quit rules/masks you want skipped."
-  sleep 3
-  echo "RUNNING ALL WORDLISTS..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -w 3 --session "$hashcatfilelocation".restore.1
-  echo "RUNNING ALL WORDLISTS WITH TOP 6 RULES..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/best64.rule -w 3 --session "$hashcatfilelocation".restore.2
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/d3ad0ne.rule -w 3 --session "$hashcatfilelocation".restore.3
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/rockyou-30000.rule -w 3 --session "$hashcatfilelocation".restore.4
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/combinator.rule -w 3 --session "$hashcatfilelocation".restore.5
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.6
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/unix-ninja-leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.7
-  echo "RUNNING ALL RULES, THIS WILL TAKE A LONG TIME, PRESS 'q' TO SKIP..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/ALL.ALL -w 3 --session "$hashcatfilelocation".restore.8
-  echo "RUNNING ALL MAKS, THIS WILL TAKE A LONG TIME, PRESS 'q' to SKIP..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".restore.9
-  end=$(date +"%m-%d-%Y::%H:%M")
-  /tools/hashcat/hashcat64.bin -m "$hashtype" --username --show -o "$hashcatfilelocation".cracked.start."$start".end."$end" --outfile-format 3 "$hashcatfilelocation"
-  echo "Done Cracking, output file is at $hashcatfilelocation.cracked.start.$start.end.$end"
-  echo "Started at $start"
-  echo "Ended at $end"
-}
 
-hashcatfile
+filename
+fileclean
+getdomains
+gethashtype
+cracklm
+crackntlm
