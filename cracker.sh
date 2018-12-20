@@ -26,7 +26,7 @@ hashcatfile() {
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.6
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/unix-ninja-leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.7
   echo "RUNNING ALL RULES, THIS WILL TAKE A LONG TIME, PRESS 'q' TO SKIP..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/ALL.ALL -w 3 --session "$hashcatfilelocation".restore.8
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/ALL.ALL.clean -w 3 --session "$hashcatfilelocation".restore.8
   echo "RUNNING ALL MAKS, THIS WILL TAKE A LONG TIME, PRESS 'q' to SKIP..."
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".restore.9
   end=$(date +"%m-%d-%Y::%H:%M")
