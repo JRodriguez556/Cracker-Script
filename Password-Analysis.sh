@@ -4,7 +4,7 @@ filename() {
   read -r hashcatfilelocation
 }
 
-makedatafolder {
+makedatafolder() {
   mkdir crackdata
 }
 
