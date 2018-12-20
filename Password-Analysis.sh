@@ -1,6 +1,9 @@
 #!/bin/bash
 makedatafolder() {
   mkdir crackdata
+  rm domains.list.del
+  rm $hashcatfilelocation.domain.select.del
+  rm $hashcatfilelocation.no.machine.accounts.del
   mv *.del crackdata
 }
 
@@ -67,14 +70,14 @@ crackntlm() {
 }
 
 lmstats() {
-  /tools/hashcat/hashcat64.bin -m 3000 --username --show -o "$hashcatfilelocation".lm.hashes.cracked --outfile-format 3 "$hashcatfilelocation".lm.hashes
-  cat "$hashcatfilelocation".lm.hashes.cracked | wc -l > cracked.lm.hashes.del
+  /tools/hashcat/hashcat64.bin -m 3000 --username --show -o "$hashcatfilelocation".lm.hashes.cracked.del --outfile-format 3 "$hashcatfilelocation".lm.hashes
+  cat "$hashcatfilelocation".lm.hashes.cracked.del | wc -l > cracked.lm.hashes.del
 }
 
 
 ntlmstats() {
-  /tools/hashcat/hashcat64.bin -m 1000 --username --show -o "$hashcatfilelocation".ntlm.hashes.cracked --outfile-format 3 "$hashcatfilelocation".ntlm.hashes
-  cat "$hashcatfilelocation".ntlm.hashes.cracked | wc -l > cracked.ntlm.hashes.del
+  /tools/hashcat/hashcat64.bin -m 1000 --username --show -o "$hashcatfilelocation".ntlm.hashes.cracked.del --outfile-format 3 "$hashcatfilelocation".ntlm.hashes
+  cat "$hashcatfilelocation".ntlm.hashes.cracked.del | wc -l > cracked.ntlm.hashes.del
 }
 
 totalstats() {
@@ -99,4 +102,6 @@ getdomains
 gethashtype
 cracklm
 crackntlm
+lmstats
+ntlmstats
 makedatafolder
