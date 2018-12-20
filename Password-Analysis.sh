@@ -17,17 +17,17 @@ endtime() {
 }
 
 fileclean() {
-  cat $hashcatfilelocation | grep -v -F $ >> $hashcatfilelocation.no.machine.accounts
+  cat $hashcatfilelocation | grep -v -F $ >> $hashcatfilelocation.no.machine.accounts.del
 }
 
 getdomains() {
-  cat $hashcatfilelocation.no.machine.accounts | grep -F \\ | sort -u -t\\ -k1,1 | cut -f1 -d\\ >> $hashcatfilelocation.domain.select
+  cat $hashcatfilelocation.no.machine.accounts.del | grep -F \\ | sort -u -t\\ -k1,1 | cut -f1 -d\\ >> $hashcatfilelocation.domain.select.del
   #generate list of domains
-  available_domains=`cat $hashcatfilelocation.domain.select`
+  available_domains=`cat $hashcatfilelocation.domain.select.del`
   n=0
   for suffix in $available_domains; do
     n=$((n+1))
-    echo "$n:$suffix" >> domains.list 
+    echo "$n:$suffix" >> domains.list.del
   done
   #have user select from list
   cat domains.list
@@ -35,19 +35,19 @@ getdomains() {
   read -r selected_domains
   for i in $(echo $selected_domains | sed "s/,/ /g")
   do
-    grep $i domains.list | cut -f2 -d: >> selected.domains
+    grep $i domains.list.del | cut -f2 -d: >> selected.domains.del
   done
   #grep domain file to hashfile
-  cat $hashcatfilelocation.no.machineaccounts | grep -f selected.domains > $hashcatfilelocation.targeted.domains
+  cat $hashcatfilelocation.no.machine.accounts.del | grep -f selected.domains.del > $hashcatfilelocation.targeted.domains.del
 }
 
 gethashtype(){
   #seperate lm vs ntlm
-  cat $hashcatfilelocation.targeted.domains | grep -v aad3b435b51404eeaad3b435b51404ee > $hashcatfilelocation.lm.hashes
-  cat $hashcatfilelocation.targeted.domains | grep aad3b435b51404eeaad3b435b51404ee > $hashcatfilelocation.ntlm.hashes
-  cat $hashcatfilelocation.targeted.domains | wc -l > total.hashes
-  cat $hashcatfilelocation.lm.hashes | wc -l > total.lm.hashes
-  cat $hashcatfilelocation.ntlm.hashes | wc -l > total.ntlm.hashes
+  cat $hashcatfilelocation.targeted.domains.del | grep -v aad3b435b51404eeaad3b435b51404ee > $hashcatfilelocation.lm.hashes.del
+  cat $hashcatfilelocation.targeted.domains.del | grep aad3b435b51404eeaad3b435b51404ee > $hashcatfilelocation.ntlm.hashes.del
+  cat $hashcatfilelocation.targeted.domains.del | wc -l > total.hashes.del
+  cat $hashcatfilelocation.lm.hashes.del | wc -l > total.lm.hashes.del
+  cat $hashcatfilelocation.ntlm.hashes.del | wc -l > total.ntlm.hashes.del
   #?should un/cracked lm hashes be included in ntlm cracking process
 }
 
