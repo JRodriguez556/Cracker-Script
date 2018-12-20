@@ -1,11 +1,7 @@
 #!/bin/bash
-filename() {
-  echo "Please input the path to the file you want cracked. (/full/path)"
-  read -r hashcatfilelocation
-}
-
 makedatafolder() {
   mkdir crackdata
+  mv *.del crackdata
 }
 
 starttime() {
@@ -104,3 +100,4 @@ getdomains
 gethashtype
 cracklm
 crackntlm
+makedatafolder
