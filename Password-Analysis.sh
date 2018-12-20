@@ -86,17 +86,17 @@ totalstats() {
   paste cracked.lm.hashes cracked.ntlm.hashes | awk '{print ($1 + $2)}' > total.cracked.hashes
 }
 
-getwordlist() {
+#getwordlist() {
   #generate wordlist for pipal
- }
+# }
  
-pipalstats() {
-  #run wordlist through pipal
- }
+#pipalstats() {
+#  #run wordlist through pipal
+# }
 
-printstats() {
-  #print all stats for user
- }
+#printstats() {
+#  #print all stats for user
+# }
 
 filename
 fileclean
