@@ -2,6 +2,7 @@
 #todo
 #add stats
 #add check for lm hashes
+#decode hex
 
 makedatafolder() {
   mkdir crackdata
@@ -102,6 +103,7 @@ read -r hashcatfilelocation
 fileclean
 getdomains
 gethashtype
+#check if lm exists
 cracklm
 crackntlm
 lmstats
