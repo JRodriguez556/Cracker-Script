@@ -30,7 +30,7 @@ getdomains() {
     echo "$n:$suffix" >> domains.list.del
   done
   #have user select from list
-  cat domains.list
+  cat domains.list.del
   echo "input domains seperated by ,"
   read -r selected_domains
   for i in $(echo $selected_domains | sed "s/,/ /g")
@@ -53,37 +53,37 @@ gethashtype(){
 
 cracklm() {
  start_time=$(date +"%m-%d-%Y::%H:%M")
- echo "$start_time" > lm.start.time
+ echo "$start_time" > lm.start.time.del
  /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes /wordlists/* -w 3 --session "$hashcatfilelocation".lm.hashes.restore.1
  /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".lm.hashes.restore.2
  /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".lm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
- echo $"end_time" > lm.end.time
+ echo $"end_time" > lm.end.time.del
 }
 
 crackntlm() {
  start_time=$(date +"%m-%d-%Y::%H:%M")
- echo "$start_time" > ntlm.start.time 
+ echo "$start_time" > ntlm.start.time.del 
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes /wordlists/* -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.1
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.2
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
- echo $"end_time" > ntlm.end.time
+ echo $"end_time" > ntlm.end.time.del
 }
 
 lmstats() {
   /tools/hashcat/hashcat64.bin -m 3000 --username --show -o "$hashcatfilelocation".lm.hashes.cracked --outfile-format 3 "$hashcatfilelocation".lm.hashes
-  cat "$hashcatfilelocation".lm.hashes.cracked | wc -l > cracked.lm.hashes
+  cat "$hashcatfilelocation".lm.hashes.cracked | wc -l > cracked.lm.hashes.del
 }
 
 
 ntlmstats() {
   /tools/hashcat/hashcat64.bin -m 1000 --username --show -o "$hashcatfilelocation".ntlm.hashes.cracked --outfile-format 3 "$hashcatfilelocation".ntlm.hashes
-  cat "$hashcatfilelocation".ntlm.hashes.cracked | wc -l > cracked.ntlm.hashes
+  cat "$hashcatfilelocation".ntlm.hashes.cracked | wc -l > cracked.ntlm.hashes.del
 }
 
 totalstats() {
-  paste cracked.lm.hashes cracked.ntlm.hashes | awk '{print ($1 + $2)}' > total.cracked.hashes
+  paste cracked.lm.hashes.del cracked.ntlm.hashes.del | awk '{print ($1 + $2)}' > total.cracked.hashes.del
 }
 
 #getwordlist() {
