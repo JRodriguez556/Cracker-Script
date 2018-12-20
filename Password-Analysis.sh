@@ -102,5 +102,5 @@ read -r hashcatfilelocation
 fileclean
 getdomains
 gethashtype
-#cracklm
-#crackntlm
+cracklm
+crackntlm
