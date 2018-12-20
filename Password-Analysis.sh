@@ -53,9 +53,6 @@ cracklm() {
  start_time=$(date +"%m-%d-%Y::%H:%M")
  echo "$start_time" > lm.start.time.del
  /tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del -w 3 -a 3 -1 ?u?d?s --increment  ?1?1?1?1?1?1?1 --session "$hashcatfilelocation".lm.hashes.restore.1
- #/tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /wordlists/* -w 3 --session "$hashcatfilelocation".lm.hashes.restore.1
- #/tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".lm.hashes.restore.2
- #/tools/hashcat/hashcat64.bin -m 3000 "$hashcatfilelocation".lm.hashes.del /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".lm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
  echo "$end_time" > lm.end.time.del
 }
@@ -74,7 +71,6 @@ lmstats() {
   /tools/hashcat/hashcat64.bin -m 3000 --username --show -o "$hashcatfilelocation".lm.hashes.cracked.del --outfile-format 3 "$hashcatfilelocation".lm.hashes.del
   cat "$hashcatfilelocation".lm.hashes.cracked.del | wc -l > cracked.lm.hashes.del
 }
-
 
 ntlmstats() {
   /tools/hashcat/hashcat64.bin -m 1000 --username --show -o "$hashcatfilelocation".ntlm.hashes.cracked.del --outfile-format 3 "$hashcatfilelocation".ntlm.hashes.del
