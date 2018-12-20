@@ -102,5 +102,5 @@ filename
 fileclean
 getdomains
 gethashtype
-cracklm
-crackntlm
+#cracklm
+#crackntlm
