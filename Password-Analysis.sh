@@ -132,10 +132,10 @@ printstats() {
   echo $(<cracked.ntlm.hashes.del)
   #find percent of total hashes cracked
   bc <<<"scale=4; $(<total.cracked.hashes.del) / $(<total.hashes.del)" > percent.total.hashes.pre.del
-  bc <<<"scale=; $(<percent.total.hashes.del) * (100)" > percent.total.hashes.del
+  bc <<<"scale=; $(<percent.total.hashes.pre.del) * (100)" > percent.total.hashes.del
   printf \\n
   echo The percent of total hashes cracked is
-  echo $(<precent.total.hashesh.del)
+  echo $(<precent.total.hashes.del)
   #find percent of total lm hashes cracked
   #find percent of total ntlm hashes cracked
 
@@ -160,4 +160,5 @@ totalstats
 getwordlist
 pipalstats
 printstats
+printf \\n
 makedatafolder
