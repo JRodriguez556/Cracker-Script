@@ -84,7 +84,7 @@ ntlmstats() {
 totalstats() {
   paste cracked.lm.hashes.del cracked.ntlm.hashes.del | awk '{print ($1 + $2)}' > total.cracked.hashes.del
   cat "$hashcatfilelocation".ntlm.hashes.cracked.del "$hashcatfilelocation".lm.hashes.cracked.del > "$hashcatfilelocation".all.cracked.hashes.del
-  cat "$hashcatfilelocation".all.cracked.hashes.del | wc -l >> total.cracked.hashes.del
+  cat "$hashcatfilelocation".all.cracked.hashes.del | wc -l > total.cracked.hashes.del
 }
 
 getwordlist() {
@@ -147,7 +147,7 @@ printstats() {
   echo the percent of lm hashes cracked is | tee -a ""$hashcatfilelocation"".stats
   lmhashcount=$(< total.lm.hashes.del)
   if ((lmhashcount > 0)); then
-      bc <<<"scale=4; $(<cracked.lm.hashes.del) / $(total.lm.hashes.del)" > percent.lm.hashes.pre.del
+      bc <<<"scale=4; $(<cracked.lm.hashes.del) / $(<total.lm.hashes.del)" > percent.lm.hashes.pre.del
       bc <<<"scale=2; $(<percent.lm.hashes.pre.del) * (100)" > percent.lm.hashes.del
       echo $(<percent.lm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
     else
