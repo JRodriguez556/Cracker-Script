@@ -125,7 +125,7 @@ printstats() {
                   echo $(<cracked.lm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
                   printf \\n | tee -a ""$hashcatfilelocation"".stats
                   echo LM Start time: $(<lm.start.time.del) | tee -a ""$hashcatfilelocation"".stats
-                  echo LM End time:  $(<lm.end.time.del) | tee -a ""$hashcatfilelocation"".stats
+                  echo LM End time:   $(<lm.end.time.del) | tee -a ""$hashcatfilelocation"".stats
           else
                   echo NO LM HASHES | tee -a ""$hashcatfilelocation"".stats
   fi
@@ -135,7 +135,7 @@ printstats() {
   echo $(<cracked.ntlm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
   printf \\n | tee -a ""$hashcatfilelocation"".stats
   echo NTLM Start time: $(<ntlm.start.time.del) | tee -a ""$hashcatfilelocation"".stats
-  echo NTLM End time:  $(<ntlm.end.time.del) | tee -a ""$hashcatfilelocation"".stats
+  echo NTLM End time:   $(<ntlm.end.time.del) | tee -a ""$hashcatfilelocation"".stats
   #find percent of total hashes cracked
   bc <<<"scale=4; $(<total.cracked.hashes.del) / $(<total.hashes.del)" > percent.total.hashes.pre.del
   bc <<<"scale=2; $(<percent.total.hashes.pre.del) * (100)" > percent.total.hashes.del
