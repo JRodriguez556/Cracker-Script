@@ -51,7 +51,6 @@ gethashtype(){
   cat $hashcatfilelocation.targeted.domains.del | wc -l > total.hashes.del
   cat $hashcatfilelocation.lm.hashes.del | wc -l > total.lm.hashes.del
   cat $hashcatfilelocation.ntlm.hashes.del | wc -l > total.ntlm.hashes.del
-  #?should un/cracked lm hashes be included in ntlm cracking process
 }
 
 cracklm() {
@@ -64,7 +63,7 @@ cracklm() {
 
 crackntlm() {
  start_time=$(date +"%m-%d-%Y::%H:%M")
- echo "$start_time" > ntlm.start.time.del 
+ echo "$start_time" > ntlm.start.time.del
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes.del /wordlists/* -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.1
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes.del /wordlists/* -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.2
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes.del /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
@@ -85,19 +84,51 @@ ntlmstats() {
 totalstats() {
   paste cracked.lm.hashes.del cracked.ntlm.hashes.del | awk '{print ($1 + $2)}' > total.cracked.hashes.del
   cat "$hashcatfilelocation".ntlm.hashes.cracked.del "$hashcatfilelocation".lm.hashes.cracked.del > "$hashcatfilelocation".all.cracked.hashes.del
+  cat "$hashcatfilelocation".all.cracked.hashes.del | wc -l >> total.cracked.hashes.del
 }
 
 getwordlist() {
   cat "$hashcatfilelocation".all.cracked.hashes.del | cut -f3 -d: > "$hashcatfilelocation".wordlist.del
 }
- 
+
 pipalstats() {
-/tools/pipal/pipal.rb "$hashcatfilelocation".wordlist.del > "$hashcatfilelocation".pipalstats.del
+  /tools/pipal/pipal.rb "$hashcatfilelocation".wordlist.del > "$hashcatfilelocation".pipalstats.del
 }
 
-#printstats() {
-#  #print all stats for user
-# }
+printstats() {
+  #print targeted domains
+    printf The targeted domains are \\n
+    echo $(<selected.domains.del)
+  #print totals HASHES
+  printf \\n
+  echo The Total Number of hashes obtained is:
+  echo $(<total.hashes.del)
+  #print total lm HASHES
+  printf \\n
+  echo the total number of LM hashes is:
+  echo $(<total.lm.hashes.del)
+  #print toal ntlm HASHES
+  printf \\n
+  echo The total number of NTLM Hashes is:
+  echo $(<total.ntlm.hashes.del)
+  #print total cracked HASHES
+  printf \\n
+  echo The total number of cracked hashes is:
+  echo $(<total.cracked.hashes.del)
+  #print total cracked lm HASHES
+  printf \\n
+  echo the total number of cracked lm hashes is:
+  echo $(<cracked.lm.hashes.del)
+  #print total cracked ntlm HASHES
+  printf \\n
+  echo the total number of cracked ntml hashes is:
+  echo $(<cracked.ntlm.hashes.del)
+  #find percent of total hashes cracked
+  #find percent of total lm hashes cracked
+  #find percent of total ntlm hashes cracked
+
+  #print
+}
 
 echo "Please input the path to the file you want cracked. (/full/path)"
 read -r hashcatfilelocation
@@ -115,4 +146,5 @@ crackntlm
 ntlmstats
 totalstats
 getwordlist
+printstats
 makedatafolder
