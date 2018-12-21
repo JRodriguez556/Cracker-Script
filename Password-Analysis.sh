@@ -99,70 +99,70 @@ printstats() {
   #print targeted domains
     printf \\n
     printf \\n
-    echo The targeted domains are: | tee -a "$hashcatfileloction".stats
-    echo $(<selected.domains.del)| tee -a "$hashcatfileloction".stats
+    echo The targeted domains are: | tee -a ""$hashcatfilelocation"".stats
+    echo $(<selected.domains.del)| tee -a ""$hashcatfilelocation"".stats
   #print totals HASHES
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo The Total Number of hashes obtained is: | tee -a "$hashcatfileloction".stats
-  echo $(<total.hashes.del) | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo The Total Number of hashes obtained is: | tee -a ""$hashcatfilelocation"".stats
+  echo $(<total.hashes.del) | tee -a ""$hashcatfilelocation"".stats
   #print total lm HASHES
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo the total number of LM hashes is: | tee -a "$hashcatfileloction".stats
-  echo $(<total.lm.hashes.del) | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo the total number of LM hashes is: | tee -a ""$hashcatfilelocation"".stats
+  echo $(<total.lm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
   #print toal ntlm HASHES
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo The total number of NTLM Hashes is: | tee -a "$hashcatfileloction".stats
-  echo $(<total.ntlm.hashes.del) | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo The total number of NTLM Hashes is: | tee -a ""$hashcatfilelocation"".stats
+  echo $(<total.ntlm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
   #print total cracked HASHES
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo The total number of cracked hashes is: | tee -a "$hashcatfileloction".stats
-  echo $(<total.cracked.hashes.del) | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo The total number of cracked hashes is: | tee -a ""$hashcatfilelocation"".stats
+  echo $(<total.cracked.hashes.del) | tee -a ""$hashcatfilelocation"".stats
   #print total cracked lm HASHES
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo the total number of cracked lm hashes is: | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo the total number of cracked lm hashes is: | tee -a ""$hashcatfilelocation"".stats
   lmhashcount=$(< total.lm.hashes.del)
   if ((lmhashcount > 0)); then
-                  echo $(<cracked.lm.hashes.del) | tee -a "$hashcatfileloction".stats
-                  printf \\n | tee -a "$hashcatfileloction".stats
-                  echo LM Start time: $(<lm.start.time.del) | tee -a "$hashcatfileloction".stats
-                  echo LM End time:  $(<lm.end.time.del) | tee -a "$hashcatfileloction".stats
+                  echo $(<cracked.lm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
+                  printf \\n | tee -a ""$hashcatfilelocation"".stats
+                  echo LM Start time: $(<lm.start.time.del) | tee -a ""$hashcatfilelocation"".stats
+                  echo LM End time:  $(<lm.end.time.del) | tee -a ""$hashcatfilelocation"".stats
           else
-                  echo NO LM HASHES | tee -a "$hashcatfileloction".stats
+                  echo NO LM HASHES | tee -a ""$hashcatfilelocation"".stats
   fi
     #print total cracked ntlm HASHES
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo the total number of cracked ntml hashes is: | tee -a "$hashcatfileloction".stats
-  echo $(<cracked.ntlm.hashes.del) | tee -a "$hashcatfileloction".stats
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo NTLM Start time: $(<ntlm.start.time.del) | tee -a "$hashcatfileloction".stats
-  echo NTLM End time:  $(<ntlm.end.time.del) | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo the total number of cracked ntml hashes is: | tee -a ""$hashcatfilelocation"".stats
+  echo $(<cracked.ntlm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo NTLM Start time: $(<ntlm.start.time.del) | tee -a ""$hashcatfilelocation"".stats
+  echo NTLM End time:  $(<ntlm.end.time.del) | tee -a ""$hashcatfilelocation"".stats
   #find percent of total hashes cracked
   bc <<<"scale=4; $(<total.cracked.hashes.del) / $(<total.hashes.del)" > percent.total.hashes.pre.del
   bc <<<"scale=2; $(<percent.total.hashes.pre.del) * (100)" > percent.total.hashes.del
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo The percent of total hashes cracked is | tee -a "$hashcatfileloction".stats
-  echo $(<percent.total.hashes.del) | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo The percent of total hashes cracked is | tee -a ""$hashcatfilelocation"".stats
+  echo $(<percent.total.hashes.del) | tee -a ""$hashcatfilelocation"".stats
   #find percent of total lm hashes cracked
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo the percent of lm hashes cracked is | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo the percent of lm hashes cracked is | tee -a ""$hashcatfilelocation"".stats
   lmhashcount=$(< total.lm.hashes.del)
   if ((lmhashcount > 0)); then
       bc <<<"scale=4; $(<cracked.lm.hashes.del) / $(total.lm.hashes.del)" > percent.lm.hashes.pre.del
       bc <<<"scale=2; $(<percent.lm.hashes.pre.del) * (100)" > percent.lm.hashes.del
-      echo $(<percent.lm.hashes.del) | tee -a "$hashcatfileloction".stats
+      echo $(<percent.lm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
     else
-      echo NO LM HASHES | tee -a "$hashcatfileloction".stats
+      echo NO LM HASHES | tee -a ""$hashcatfilelocation"".stats
   fi
   #find percent of total ntlm hashes cracked
-  printf \\n | tee -a "$hashcatfileloction".stats
-  echo the percent of ntlm hashes cracked is | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  echo the percent of ntlm hashes cracked is | tee -a ""$hashcatfilelocation"".stats
   bc <<<"scale=4; $(<cracked.ntlm.hashes.del) / $(<total.ntlm.hashes.del)" > percent.ntlm.hashes.pre.del
   bc <<<"scale=2; $(<percent.ntlm.hashes.pre.del) * (100)" > percent.ntlm.hashes.del
-  echo $(<percent.ntlm.hashes.del) | tee -a "$hashcatfileloction".stats
+  echo $(<percent.ntlm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
   #######
-  printf \\n | tee -a "$hashcatfileloction".stats
-  cat "$hashcatfilelocation".pipalstats.del | grep "Basic" -A 50 | grep -v Basic --color=never | tee -a "$hashcatfileloction".stats
-  cat "$hashcatfilelocation".pipalstats.del | grep "One to six characters" -A 27 --color=never | tee -a "$hashcatfileloction".stats
+  printf \\n | tee -a ""$hashcatfilelocation"".stats
+  cat "$hashcatfilelocation".pipalstats.del | grep "Basic" -A 50 | grep -v Basic --color=never | tee -a ""$hashcatfilelocation"".stats
+  cat "$hashcatfilelocation".pipalstats.del | grep "One to six characters" -A 27 --color=never | tee -a ""$hashcatfilelocation"".stats
   cat "$hashcatfilelocation".pipalstats.del | grep "Last digit" -A 90 --color=never | tee -a "$hashcatfilelocation".stats
 }
 
