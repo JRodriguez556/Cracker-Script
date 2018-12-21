@@ -132,14 +132,28 @@ printstats() {
   echo $(<cracked.ntlm.hashes.del)
   #find percent of total hashes cracked
   bc <<<"scale=4; $(<total.cracked.hashes.del) / $(<total.hashes.del)" > percent.total.hashes.pre.del
-  bc <<<"scale=; $(<percent.total.hashes.pre.del) * (100)" > percent.total.hashes.del
+  bc <<<"scale=2; $(<percent.total.hashes.pre.del) * (100)" > percent.total.hashes.del
   printf \\n
   echo The percent of total hashes cracked is
-  echo $(<precent.total.hashes.del)
+  echo $(<percent.total.hashes.del)
   #find percent of total lm hashes cracked
+  printf \\n
+  echo the percent of lm hashes cracked is
+  lmhashcount=$(< total.lm.hashes.del)
+  if ((lmhashcount > 0)); then
+      bc <<<"scale=4; $(<cracked.lm.hashes.del) / $(total.lm.hashes.del)" > percent.lm.hashes.pre.del
+      bc <<<"scale=2; $(<percent.lm.hashes.pre.del) * (100)" > percent.lm.hashes.del
+      echo $(<percent.lm.hashes.del)
+    else
+      echo NO LM HASHES
+  fi
   #find percent of total ntlm hashes cracked
-
-  #print
+  printf \\n
+  echo the percent of ntlm hashes cracked is
+  bc <<<"scale=4; $(<cracked.ntlm.hashes.del) / $(total.ntlm.hashes.del)" > percent.ntlm.hashes.pre.del
+  bc <<<"scale=2; $(<percent.ntlm.hashes.pre.del) * (100)" > percent.ntlm.hashes.del
+  echo $(<percent.ntlm.hashes.del)
+   #print
 }
 
 echo "Please input the path to the file you want cracked. (/full/path)"
