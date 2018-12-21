@@ -150,7 +150,7 @@ printstats() {
   #find percent of total ntlm hashes cracked
   printf \\n
   echo the percent of ntlm hashes cracked is
-  bc <<<"scale=4; $(<cracked.ntlm.hashes.del) / $(total.ntlm.hashes.del)" > percent.ntlm.hashes.pre.del
+  bc <<<"scale=4; $(<cracked.ntlm.hashes.del) / $(<total.ntlm.hashes.del)" > percent.ntlm.hashes.pre.del
   bc <<<"scale=2; $(<percent.ntlm.hashes.pre.del) * (100)" > percent.ntlm.hashes.del
   echo $(<percent.ntlm.hashes.del)
    #print
