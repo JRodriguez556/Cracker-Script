@@ -153,7 +153,11 @@ printstats() {
   bc <<<"scale=4; $(<cracked.ntlm.hashes.del) / $(<total.ntlm.hashes.del)" > percent.ntlm.hashes.pre.del
   bc <<<"scale=2; $(<percent.ntlm.hashes.pre.del) * (100)" > percent.ntlm.hashes.del
   echo $(<percent.ntlm.hashes.del)
-   #print
+  #######
+  printf \\n
+  cat "$hashcatfilelocation".pipalstats.del | grep "Basic" -A 50 | grep -v Basic --color=never
+  cat "$hashcatfilelocation".pipalstats.del |grep "One to six characters" -A 27 --color=never
+  cat "$hashcatfilelocation".hashes.pipalstats.del |grep "Last digit" -A 90 --color=never
 }
 
 echo "Please input the path to the file you want cracked. (/full/path)"
