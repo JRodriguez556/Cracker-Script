@@ -84,15 +84,16 @@ ntlmstats() {
 
 totalstats() {
   paste cracked.lm.hashes.del cracked.ntlm.hashes.del | awk '{print ($1 + $2)}' > total.cracked.hashes.del
+  cat "$hashcatfilelocation".ntlm.hashes.cracked.del "$hashcatfilelocation".lm.hashes.cracked.del > "$hashcatfilelocation".all.cracked.hashes.del
 }
 
-#getwordlist() {
-  #generate wordlist for pipal
-# }
+getwordlist() {
+  cat "$hashcatfilelocation".all.cracked.hashes.del | cut -f3 -d: > "$hashcatfilelocation".wordlist.del
+}
  
-#pipalstats() {
-#  #run wordlist through pipal
-# }
+pipalstats() {
+/tools/pipal/pipal.rb "$hashcatfilelocation".wordlist.del > "$hashcatfilelocation".pipalstats.del
+}
 
 #printstats() {
 #  #print all stats for user
@@ -112,4 +113,6 @@ if ((lmhashcount > 0)); then
 fi
 crackntlm
 ntlmstats
+totalstats
+getwordlist
 makedatafolder
