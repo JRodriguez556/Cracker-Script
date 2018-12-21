@@ -1,8 +1,6 @@
 #!/bin/bash
 #todo
-#add stats
-#add check for lm hashes
-#change file names
+#fix makedatafolder
 
 makedatafolder() {
   mkdir crackdata
@@ -123,8 +121,8 @@ printstats() {
   lmhashcount=$(< total.lm.hashes.del)
   if ((lmhashcount > 0)); then
                   echo $(<cracked.lm.hashes.del) | tee -a ""$hashcatfilelocation"".stats
-		  echo "!!!!!!WARNING!!!!!!
-		  echo "!!!!!!LM HASHES FOUND!!!!!!
+		  echo "!!!!!!WARNING!!!!!!"
+		  echo "!!!!!!LM HASHES FOUND!!!!!!"
                   printf \\n | tee -a ""$hashcatfilelocation"".stats
                   echo LM Start time: $(<lm.start.time.del) | tee -a ""$hashcatfilelocation"".stats
                   echo LM End time:   $(<lm.end.time.del) | tee -a ""$hashcatfilelocation"".stats
