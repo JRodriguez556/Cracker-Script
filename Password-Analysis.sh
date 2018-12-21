@@ -97,7 +97,9 @@ pipalstats() {
 
 printstats() {
   #print targeted domains
-    printf The targeted domains are \\n
+    printf \\n
+    printf \\n
+    echo The targeted domains are:
     echo $(<selected.domains.del)
   #print totals HASHES
   printf \\n
@@ -118,12 +120,22 @@ printstats() {
   #print total cracked lm HASHES
   printf \\n
   echo the total number of cracked lm hashes is:
-  echo $(<cracked.lm.hashes.del)
-  #print total cracked ntlm HASHES
+  lmhashcount=$(< total.lm.hashes.del)
+  if ((lmhashcount > 0)); then
+                  echo $(<cracked.lm.hashes.del)
+          else
+                  echo NO LM HASHES
+  fi
+    #print total cracked ntlm HASHES
   printf \\n
   echo the total number of cracked ntml hashes is:
   echo $(<cracked.ntlm.hashes.del)
   #find percent of total hashes cracked
+  bc <<<"scale=4; $(<total.cracked.hashes.del) / $(<total.hashes.del)" > percent.total.hashes.pre.del
+  bc <<<"scale=; $(<percent.total.hashes.del) * (100)" > percent.total.hashes.del
+  printf \\n
+  echo The percent of total hashes cracked is
+  echo $(<precent.total.hashesh.del)
   #find percent of total lm hashes cracked
   #find percent of total ntlm hashes cracked
 
@@ -146,5 +158,6 @@ crackntlm
 ntlmstats
 totalstats
 getwordlist
+pipalstats
 printstats
 makedatafolder
