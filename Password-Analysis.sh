@@ -2,7 +2,7 @@
 #todo
 
 makedatafolder() {
-  mkdir crackdata."$main_start_time"
+  mkdir Crackdata."$main_start_time"
   rm domains.list."$main_start_time"
   rm $hashcatfilelocation.domain.select."$main_start_time"
   rm $hashcatfilelocation.no.machine.accounts."$main_start_time"
@@ -26,8 +26,14 @@ makedatafolder() {
   rm total.hashes."$main_start_time"
   rm total.lm.hashes."$main_start_time"
   rm total.ntlm.hashes."$main_start_time"
+  rm cracked.lm.hashes."$main_start_time"
+  rm lm.end.time."$main_start_time"
+  rm lm.start.time."$main_start_time"
+  rm percent.lm.hashes."$main_start_time"
+  rm percent.lm.hashes.pre."$main_start_time"
+  rm "$hashcatfilelocation".lm.hashes.cracked."$main_start_time"
   cat "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time" | cut -f1 -d: > "$hashcatfilelocation".compromised.users."$main_start_time"
-  mv *."$main_start_time" crackdata."$main_start_time"
+  mv *."$main_start_time" Crackdata."$main_start_time"
 }
 
 fileclean() {
@@ -173,6 +179,8 @@ printstats() {
   echo $(<percent.ntlm.hashes."$main_start_time")"%" | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #######
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo "Password Statistics:"
+  printf \\n
   cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "Basic" -A 50 | grep -v Basic --color=never | tee -a "$hashcatfilelocation".stats."$main_start_time"
   cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "One to six characters" -A 27 --color=never | tee -a "$hashcatfilelocation".stats."$main_start_time"
   cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "Last digit" -A 90 --color=never | tee -a "$hashcatfilelocation".stats."$main_start_time"
