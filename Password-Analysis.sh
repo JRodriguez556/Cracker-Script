@@ -19,7 +19,7 @@ endtime() {
 }
 
 fileclean() {
-  cat $hashcatfilelocation | grep -v -F $ >> $hashcatfilelocation.no.machine.accounts"$main_start_time"
+  cat $hashcatfilelocation | grep -v -F $ >> $hashcatfilelocation.no.machine.accounts."$main_start_time"
 }
 
 getdomains() {
