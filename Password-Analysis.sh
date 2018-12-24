@@ -1,6 +1,5 @@
 #!/bin/bash
 #todo
-#fix makedatafolder
 
 makedatafolder() {
   mkdir crackdata."$main_start_time"
@@ -20,7 +19,7 @@ makedatafolder() {
   rm "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time"
   rm "$hashcatfilelocation".pipalstats."$main_start_time"
   rm "$hashcatfilelocation".targeted.domains."$main_start_time"
-  cat "$hashcatfilelocation".wordlist."$main_start_time" | sort | uniq > "$hashcatfilelocation".compromised.wordlists."$main_start_time"
+  cat "$hashcatfilelocation".wordlist."$main_start_time" | sort | uniq > "$hashcatfilelocation".compromised.words.list."$main_start_time"
   rm "$hashcatfilelocation".wordlist."$main_start_time"
   rm selected.domains."$main_start_time"
   rm total.cracked.hashes."$main_start_time"
@@ -110,68 +109,68 @@ printstats() {
   #print targeted domains
     printf \\n
     printf \\n
-    echo The targeted domains are: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+    echo The Targeted Domains Are: | tee -a "$hashcatfilelocation".stats."$main_start_time"
     echo $(<selected.domains."$main_start_time")| tee -a "$hashcatfilelocation".stats."$main_start_time"
   #print totals HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo The Total Number of hashes obtained is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Total Number of Hashes Obtained Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo $(<total.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #print total lm HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo the total number of LM hashes is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Total Number of LM Hashes Obtained Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo $(<total.lm.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #print toal ntlm HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo The total number of NTLM Hashes is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Total Number of NTLM Hashes Obtained Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo $(<total.ntlm.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #print total cracked HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo The total number of cracked hashes is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Total Number of Cracked Hashes Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo $(<total.cracked.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #print total cracked lm HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo the total number of cracked lm hashes is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Total Number of Cracked LM Hashes Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   lmhashcount=$(< total.lm.hashes."$main_start_time")
   if ((lmhashcount > 0)); then
                   echo $(<cracked.lm.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
 		  echo "!!!!!!WARNING!!!!!!"
 		  echo "!!!!!!LM HASHES FOUND!!!!!!"
                   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-                  echo LM Start time: $(<lm.start.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
-                  echo LM End time:   $(<lm.end.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+                  echo LM Start Time: $(<lm.start.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+                  echo LM End Time:   $(<lm.end.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
           else
-                  echo NO LM HASHES | tee -a "$hashcatfilelocation".stats."$main_start_time"
+                  echo "NO LM HASHES FOUND (GOOD)" | tee -a "$hashcatfilelocation".stats."$main_start_time"
   fi
     #print total cracked ntlm HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo the total number of cracked ntml hashes is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Total Number of Cracked NTLM Hashes Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo $(<cracked.ntlm.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo NTLM Start time: $(<ntlm.start.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo NTLM End time:   $(<ntlm.end.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo NTLM Start Time: $(<ntlm.start.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo NTLM End Time:   $(<ntlm.end.time."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #find percent of total hashes cracked
   bc <<<"scale=4; $(<total.cracked.hashes."$main_start_time") / $(<total.hashes."$main_start_time")" > percent.total.hashes.pre."$main_start_time"
   bc <<<"scale=2; $(<percent.total.hashes.pre."$main_start_time") * (100)" > percent.total.hashes."$main_start_time"
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo The percent of total hashes cracked is | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo $(<percent.total.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Percent of Total Hashes Cracked Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo $(<percent.total.hashes."$main_start_time")"%" | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #find percent of total lm hashes cracked
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo the percent of lm hashes cracked is | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Percent of LM Hashes Cracked Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   lmhashcount=$(< total.lm.hashes."$main_start_time")
   if ((lmhashcount > 0)); then
       bc <<<"scale=4; $(<cracked.lm.hashes."$main_start_time") / $(<total.lm.hashes."$main_start_time")" > percent.lm.hashes.pre."$main_start_time"
       bc <<<"scale=2; $(<percent.lm.hashes.pre."$main_start_time") * (100)" > percent.lm.hashes."$main_start_time"
-      echo $(<percent.lm.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+      echo $(<percent.lm.hashes."$main_start_time")"%" | tee -a "$hashcatfilelocation".stats."$main_start_time"
     else
       echo NO LM HASHES | tee -a "$hashcatfilelocation".stats."$main_start_time"
   fi
   #find percent of total ntlm hashes cracked
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo the percent of ntlm hashes cracked is | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo The Percent of NTLM Hashes Cracked Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
   bc <<<"scale=4; $(<cracked.ntlm.hashes."$main_start_time") / $(<total.ntlm.hashes."$main_start_time")" > percent.ntlm.hashes.pre."$main_start_time"
   bc <<<"scale=2; $(<percent.ntlm.hashes.pre."$main_start_time") * (100)" > percent.ntlm.hashes."$main_start_time"
-  echo $(<percent.ntlm.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo $(<percent.ntlm.hashes."$main_start_time")"%" | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #######
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
   cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "Basic" -A 50 | grep -v Basic --color=never | tee -a "$hashcatfilelocation".stats."$main_start_time"
