@@ -27,15 +27,8 @@ makedatafolder() {
   rm total.hashes."$main_start_time"
   rm total.lm.hashes."$main_start_time"
   rm total.ntlm.hashes."$main_start_time"
+  cat "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time" | cut -f1 -d: > "$hashcatfilelocation".compromised.users."$main_start_time"
   mv *."$main_start_time" crackdata."$main_start_time"
-}
-
-starttime() {
-  start_time=$(date +"%m-%d-%Y::%H:%M")
-}
-
-endtime() {
-  end_time=$(date +"%m-%d-%Y::%H:%M")
 }
 
 fileclean() {
@@ -183,7 +176,7 @@ printstats() {
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
   cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "Basic" -A 50 | grep -v Basic --color=never | tee -a "$hashcatfilelocation".stats."$main_start_time"
   cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "One to six characters" -A 27 --color=never | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "Last digit" -A 90 --color=never | tee -a "$hashcatfilelocation".stats
+  cat "$hashcatfilelocation".pipalstats."$main_start_time" | grep "Last digit" -A 90 --color=never | tee -a "$hashcatfilelocation".stats."$main_start_time"
 }
 
 echo "Please input the path to the file you want cracked. (/full/path)"
