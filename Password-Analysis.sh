@@ -3,7 +3,7 @@
 #fix makedatafolder
 
 makedatafolder() {
-  main_start_time=$(date +"%m-%d-%Y::%H:%M")
+  main_start_time=$(date +"%m-%d-%Y-%H-%M")
   mkdir crackdata."$main_start_time"
   rm domains.list."$main_start_time"
   rm $hashcatfilelocation.domain.select."$main_start_time"
