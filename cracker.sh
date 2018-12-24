@@ -17,16 +17,16 @@ hashcatfile() {
   echo "Use 'q' to quit rules/masks you want skipped."
   sleep 3
   echo "RUNNING ALL WORDLISTS..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -w 3 --session "$hashcatfilelocation".restore.1
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -w 3 --session "$hashcatfilelocation".restore.1
   echo "RUNNING ALL WORDLISTS WITH TOP 6 RULES..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/best64.rule -w 3 --session "$hashcatfilelocation".restore.2
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/d3ad0ne.rule -w 3 --session "$hashcatfilelocation".restore.3
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/rockyou-30000.rule -w 3 --session "$hashcatfilelocation".restore.4
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/combinator.rule -w 3 --session "$hashcatfilelocation".restore.5
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.6
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/unix-ninja-leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.7
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/best64.rule -w 3 --session "$hashcatfilelocation".restore.2
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/d3ad0ne.rule -w 3 --session "$hashcatfilelocation".restore.3
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/rockyou-30000.rule -w 3 --session "$hashcatfilelocation".restore.4
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/combinator.rule -w 3 --session "$hashcatfilelocation".restore.5
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.6
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/unix-ninja-leetspeak.rule -w 3 --session "$hashcatfilelocation".restore.7
   echo "RUNNING ALL RULES, THIS WILL TAKE A LONG TIME, PRESS 'q' TO SKIP..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/* -r /tools/hashcat/rules/ALL.ALL.clean -w 3 --session "$hashcatfilelocation".restore.8
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/ALL.ALL.clean -w 3 --session "$hashcatfilelocation".restore.8
   echo "RUNNING ALL MAKS, THIS WILL TAKE A LONG TIME, PRESS 'q' to SKIP..."
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".restore.9
   end=$(date +"%m-%d-%Y::%H:%M")
