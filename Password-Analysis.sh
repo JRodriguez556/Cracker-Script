@@ -1,5 +1,7 @@
 #!/bin/bash
 #todo
+#test time for 8 char inc bruteforce
+#add 8+ char masks
 
 makedatafolder() {
   mkdir Crackdata."$main_start_time"
