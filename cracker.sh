@@ -28,7 +28,7 @@ hashcatfile() {
   echo "RUNNING ALL RULES, THIS WILL TAKE A LONG TIME, PRESS 'q' TO SKIP..."
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/ALL.ALL.clean -w 3 --session "$hashcatfilelocation".restore.8
   echo "RUNNING ALL MAKS, THIS WILL TAKE A LONG TIME, PRESS 'q' to SKIP..."
-  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".restore.9
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/masks/all.masks.clean -w 3 -a 3 --session "$hashcatfilelocation".restore.9
   end=$(date +"%m-%d-%Y::%H:%M")
   /tools/hashcat/hashcat64.bin -m "$hashtype" --username --show -o "$hashcatfilelocation".cracked.start."$start".end."$end" --outfile-format 3 "$hashcatfilelocation"
   echo "Done Cracking, output file is at $hashcatfilelocation.cracked.start.$start.end.$end"
