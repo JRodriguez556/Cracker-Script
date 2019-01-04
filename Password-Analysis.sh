@@ -16,9 +16,9 @@ makedatafolder() {
   rm percent.total.hashes."$main_start_time"
   rm percent.total.hashes.pre."$main_start_time"
   mv "$hashcatfilelocation".all.cracked.hashes."$main_start_time" "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time"
-  rm "$hashcatfilelocation".lm.hashes."$main_start_time"
-  rm "$hashcatfilelocation".ntlm.hashes."$main_start_time"
-  rm "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time"
+  #rm "$hashcatfilelocation".lm.hashes."$main_start_time"
+  #rm "$hashcatfilelocation".ntlm.hashes."$main_start_time" 
+  #rm "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time"
   rm "$hashcatfilelocation".pipalstats."$main_start_time"
   rm "$hashcatfilelocation".targeted.domains."$main_start_time"
   cat "$hashcatfilelocation".wordlist."$main_start_time" | sort | uniq > "$hashcatfilelocation".compromised.words.list."$main_start_time"
@@ -33,8 +33,8 @@ makedatafolder() {
   rm lm.start.time."$main_start_time"
   rm percent.lm.hashes."$main_start_time"
   rm percent.lm.hashes.pre."$main_start_time"
-  rm "$hashcatfilelocation".lm.hashes.cracked."$main_start_time"
-  cat "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time" | cut -f1 -d: > "$hashcatfilelocation".compromised.users."$main_start_time"
+  #rm "$hashcatfilelocation".lm.hashes.cracked."$main_start_time"
+  cat "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time" | sort | cut -f1 -d: > "$hashcatfilelocation".compromised.users."$main_start_time"
   mv *."$main_start_time" Crackdata."$main_start_time"
 }
 
