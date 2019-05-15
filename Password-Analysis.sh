@@ -1,7 +1,6 @@
 #!/bin/bash
 #todo
-#test time for 8 char inc bruteforce
-#add 8+ char masks
+#fix hex thing
 
 makedatafolder() {
   mkdir Crackdata."$main_start_time"
@@ -16,9 +15,9 @@ makedatafolder() {
   rm percent.total.hashes."$main_start_time"
   rm percent.total.hashes.pre."$main_start_time"
   mv "$hashcatfilelocation".all.cracked.hashes."$main_start_time" "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time"
-  #rm "$hashcatfilelocation".lm.hashes."$main_start_time"
-  #rm "$hashcatfilelocation".ntlm.hashes."$main_start_time" 
-  #rm "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time"
+  rm "$hashcatfilelocation".lm.hashes."$main_start_time"
+  rm "$hashcatfilelocation".ntlm.hashes."$main_start_time"
+  rm "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time"
   rm "$hashcatfilelocation".pipalstats."$main_start_time"
   rm "$hashcatfilelocation".targeted.domains."$main_start_time"
   cat "$hashcatfilelocation".wordlist."$main_start_time" | sort | uniq > "$hashcatfilelocation".compromised.words.list."$main_start_time"
@@ -27,14 +26,14 @@ makedatafolder() {
   rm total.cracked.hashes."$main_start_time"
   rm total.hashes."$main_start_time"
   rm total.lm.hashes."$main_start_time"
-  rm total.ntlm.hashes."$main_start_time"
+  rm total.hashes."$main_start_time"
   rm cracked.lm.hashes."$main_start_time"
   rm lm.end.time."$main_start_time"
   rm lm.start.time."$main_start_time"
   rm percent.lm.hashes."$main_start_time"
   rm percent.lm.hashes.pre."$main_start_time"
-  #rm "$hashcatfilelocation".lm.hashes.cracked."$main_start_time"
-  cat "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time" | sort | cut -f1 -d: > "$hashcatfilelocation".compromised.users."$main_start_time"
+  rm "$hashcatfilelocation".lm.hashes.cracked."$main_start_time"
+  cat "$hashcatfilelocation".full.cracked.hashes.list."$main_start_time" | cut -f1 -d: > "$hashcatfilelocation".compromised.users."$main_start_time"
   mv *."$main_start_time" Crackdata."$main_start_time"
 }
 
@@ -65,10 +64,10 @@ getdomains() {
 gethashtype(){
   #seperate lm vs ntlm
   cat $hashcatfilelocation.targeted.domains."$main_start_time" | grep -v aad3b435b51404eeaad3b435b51404ee > $hashcatfilelocation.lm.hashes."$main_start_time"
-  cat $hashcatfilelocation.targeted.domains."$main_start_time" | grep aad3b435b51404eeaad3b435b51404ee > $hashcatfilelocation.ntlm.hashes."$main_start_time"
+  cat $hashcatfilelocation.targeted.domains."$main_start_time" > $hashcatfilelocation.ntlm.hashes."$main_start_time"
   cat $hashcatfilelocation.targeted.domains."$main_start_time" | wc -l > total.hashes."$main_start_time"
   cat $hashcatfilelocation.lm.hashes."$main_start_time" | wc -l > total.lm.hashes."$main_start_time"
-  cat $hashcatfilelocation.ntlm.hashes."$main_start_time" | wc -l > total.ntlm.hashes."$main_start_time"
+  cat $hashcatfilelocation.ntlm.hashes."$main_start_time" | wc -l > total.hashes."$main_start_time"
 }
 
 cracklm() {
@@ -84,7 +83,8 @@ crackntlm() {
  echo "$start_time" > ntlm.start.time."$main_start_time"
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /wordlists/all.wordlists.clean -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.1
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.2
- /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /tools/hashcat/masks/all.masks.clean -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" -w 3 -a 3  --increment  ?a?a?a?a?a?a?a --session "$hashcatfilelocation".ntlm.hashes.restore.4
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
  echo "$end_time" > ntlm.end.time."$main_start_time"
 }
@@ -94,14 +94,18 @@ lmstats() {
   cat "$hashcatfilelocation".lm.hashes.cracked."$main_start_time" | wc -l > cracked.lm.hashes."$main_start_time"
 }
 
+lmtontlm() {
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" -w 3 -r /tools/hashcat/rules/lm2ntlm.rule "$hashcatfilelocation".compromised.words.list."$main_start_time"
+}
+
 ntlmstats() {
   /tools/hashcat/hashcat64.bin -m 1000 --username --show -o "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time" --outfile-format 3 "$hashcatfilelocation".ntlm.hashes."$main_start_time"
   cat "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time" | wc -l > cracked.ntlm.hashes."$main_start_time"
 }
 
 totalstats() {
-  paste cracked.lm.hashes."$main_start_time" cracked.ntlm.hashes."$main_start_time" | awk '{print ($1 + $2)}' > total.cracked.hashes."$main_start_time"
-  cat "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time" "$hashcatfilelocation".lm.hashes.cracked."$main_start_time" > "$hashcatfilelocation".all.cracked.hashes."$main_start_time"
+  cat cracked.ntlm.hashes."$main_start_time"  > total.cracked.hashes."$main_start_time"
+  cat "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time" > "$hashcatfilelocation".all.cracked.hashes."$main_start_time"
   cat "$hashcatfilelocation".all.cracked.hashes."$main_start_time" | wc -l > total.cracked.hashes."$main_start_time"
 }
 
@@ -130,7 +134,7 @@ printstats() {
   #print toal ntlm HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo The Total Number of NTLM Hashes Obtained Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  echo $(<total.ntlm.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
+  echo $(<total.hashes."$main_start_time") | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #print total cracked HASHES
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo The Total Number of Cracked Hashes Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
@@ -176,7 +180,7 @@ printstats() {
   #find percent of total ntlm hashes cracked
   printf \\n | tee -a "$hashcatfilelocation".stats."$main_start_time"
   echo The Percent of NTLM Hashes Cracked Is: | tee -a "$hashcatfilelocation".stats."$main_start_time"
-  bc <<<"scale=4; $(<cracked.ntlm.hashes."$main_start_time") / $(<total.ntlm.hashes."$main_start_time")" > percent.ntlm.hashes.pre."$main_start_time"
+  bc <<<"scale=4; $(<cracked.ntlm.hashes."$main_start_time") / $(<total.hashes."$main_start_time")" > percent.ntlm.hashes.pre."$main_start_time"
   bc <<<"scale=2; $(<percent.ntlm.hashes.pre."$main_start_time") * (100)" > percent.ntlm.hashes."$main_start_time"
   echo $(<percent.ntlm.hashes."$main_start_time")"%" | tee -a "$hashcatfilelocation".stats."$main_start_time"
   #######
@@ -198,6 +202,7 @@ lmhashcount=$(< total.lm.hashes."$main_start_time")
 if ((lmhashcount > 0)); then
                 cracklm
                 lmstats
+                lmtontlm
         else
                 echo NO LM HASHES
 fi
