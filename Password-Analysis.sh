@@ -95,7 +95,9 @@ lmstats() {
 }
 
 lmtontlm() {
- /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" -w 3 -r /tools/hashcat/rules/lm2ntlm.rule "$hashcatfilelocation".compromised.words.list."$main_start_time"
+  /tools/hashcat/hashcat64.bin -m 3000 --username --show -o "$hashcatfilelocation".lm.hashes.cracked."$main_start_time" --outfile-format 3 $hashcatfilelocation
+  cat "$hashcatfilelocation".lm.hashes.cracked."$main_start_time" | cut -f3 -d: > lm.words."$main_start_time"
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" -w 3 -r /tools/hashcat/rules/lm2ntlm.rule lm.words."$main_start_time"
 }
 
 ntlmstats() {
