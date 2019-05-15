@@ -24,7 +24,6 @@ makedatafolder() {
   rm "$hashcatfilelocation".wordlist."$main_start_time"
   rm selected.domains."$main_start_time"
   rm total.cracked.hashes."$main_start_time"
-  rm total.hashes."$main_start_time"
   rm total.lm.hashes."$main_start_time"
   rm total.hashes."$main_start_time"
   rm cracked.lm.hashes."$main_start_time"
@@ -84,7 +83,7 @@ crackntlm() {
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /wordlists/all.wordlists.clean -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.1
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /wordlists/all.wordlists.clean -r /tools/hashcat/rules/all.pwanalysis.rule -w 3 --session "$hashcatfilelocation".ntlm.hashes.restore.2
  /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" -w 3 -a 3  --increment  ?a?a?a?a?a?a?a --session "$hashcatfilelocation".ntlm.hashes.restore.4
- /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /tools/hashcat/masks/* -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
+ /tools/hashcat/hashcat64.bin -m 1000 "$hashcatfilelocation".ntlm.hashes."$main_start_time" /tools/hashcat/masks/new.all.masks -w 3 -a 3 --session "$hashcatfilelocation".ntlm.hashes.restore.3
  end_time=$(date +"%m-%d-%Y::%H:%M")
  echo "$end_time" > ntlm.end.time."$main_start_time"
 }
