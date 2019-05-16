@@ -1,5 +1,4 @@
 #!/bin/bash
-#todo add potfile words
 
 hashcatfile() {
   echo "Please input the path to the file you want cracked. (/full/path)"
