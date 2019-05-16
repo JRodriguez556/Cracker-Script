@@ -1,6 +1,7 @@
 #!/bin/bash
 #todo
 #fix hex thing
+#add potfile words
 
 makedatafolder() {
   mkdir Crackdata."$main_start_time"
