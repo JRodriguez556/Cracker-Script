@@ -19,6 +19,9 @@ hashcatfile() {
   echo "Starting"
   echo "Use 'q' to quit rules/masks you want skipped."
   sleep 3
+  echo "RUNNNG POTFILE WORDS"
+  cat /tools/hashcat/hashcat.potfile | cut -f2 -d: | sort | uniq > /tools/hashcat/potfile.words
+  /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /tools/hashcat/potfile.words -w 3 --session "$hashcatfilelocation".restore.0
   echo "RUNNING ALL WORDLISTS..."
   /tools/hashcat/hashcat64.bin -m "$hashtype" "$hashcatfilelocation" /wordlists/all.wordlists.clean -w 3 --session "$hashcatfilelocation".restore.1
   echo "RUNNING ALL WORDLISTS WITH TOP 6 RULES..."
