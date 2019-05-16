@@ -1,4 +1,5 @@
 #!/bin/bash
+#todo add potfile words
 
 hashcatfile() {
   echo "Please input the path to the file you want cracked. (/full/path)"
@@ -10,6 +11,8 @@ hashcatfile() {
   echo "7300 : IPMI"
   echo "2500 : WPA/WPA2"
   echo "3000 : LM"
+  echo "1731 : MSSQL (2012)"
+  echo " 132 : MSSQL (2005)"
   read -r hashtype
   start=$(date +"%m-%d-%Y::%H:%M")
   echo "Attempting to crack"
