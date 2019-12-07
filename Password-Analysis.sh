@@ -49,7 +49,7 @@ gethashtype(){
   #seperate lm vs ntlm
   cat $hashcatfilelocation.targeted.domains."$main_start_time" | grep -v aad3b435b51404eeaad3b435b51404ee > $hashcatfilelocation.lm.hashes."$main_start_time"
   cat $hashcatfilelocation.targeted.domains."$main_start_time" > $hashcatfilelocation.ntlm.hashes."$main_start_time"
-  total_lm_hashed=$(cat $hashcatfilelocation.lm.hashes."$main_start_time" | wc -l)
+  total_lm_hashes=$(cat $hashcatfilelocation.lm.hashes."$main_start_time" | wc -l)
   total_hashes=$(cat $hashcatfilelocation.ntlm.hashes."$main_start_time" | wc -l)
 }
 
@@ -258,6 +258,7 @@ totalstats
 getwordlist
 pipalstats
 printstats
+print_html_table
 printf \\n
 makedatafolder
 
