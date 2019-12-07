@@ -186,13 +186,13 @@ printstats() {
 
 get_html_table_from_pipal() {
   echo "<table>"
-  grep "$1" "$hashcatfilelocation".pipalstats."$main_start_time"  | sed 's/^/<tr><th>/' | sed 's/$/<\/th><\/tr>/';
+  grep "$1" "$hashcatfilelocation".pipalstats."$main_start_time" | sed 's/^/<tr><th>/' | sed 's/$/<\/th><\/tr>/';
   grep "$1" -A 10 "$hashcatfilelocation".pipalstats."$main_start_time" | grep -v "$1" | sed 's/^/<tr><td>/' | sed "s/$2/<\/td><td>/" | sed 's/$/<\/td><\/tr>/';
   echo "</table>"
 }
 
 get_pipal_stat() {
-  grep $1 "$hashcatfilelocation".pipalstats."$main_start_time" | cut -d'=' -f2 | awk '{$1=$1};1'
+  grep "$1" "$hashcatfilelocation".pipalstats."$main_start_time" | cut -d'=' -f2 | awk '{$1=$1};1'
 }
 
 print_html_table() {
