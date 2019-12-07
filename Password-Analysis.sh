@@ -188,7 +188,7 @@ get_html_table_from_pipal() {
   html_output "<br>"
   echo "<table>"
   grep "$1" "$hashcatfilelocation".pipalstats."$main_start_time" | sed 's/^/<tr><th colspan=2>/' | sed 's/$/<\/th><\/tr>/';
-  grep "$1" -A 10 "$hashcatfilelocation".pipalstats."$main_start_time" | grep -v "$1" | sed 's/^/<tr><td>/' | sed "s/$2/<\/td><td>/" | sed 's/$/<\/td><\/tr>/';
+  sed -n "/$1/,/^$/p" "$hashcatfilelocation".pipalstats."$main_start_time" | sed '$d' | grep -v "$1" | sed 's/^/<tr><td>/' | sed "s/$2/<\/td><td>/" | sed 's/$/<\/td><\/tr>/';
   echo "</table>"
 }
 
