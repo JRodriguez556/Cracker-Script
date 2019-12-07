@@ -73,7 +73,7 @@ lmstats() {
   /tools/hashcat/hashcat64.bin -m 3000 --username --show -o "$hashcatfilelocation".lm.hashes.cracked."$main_start_time" --outfile-format 3 "$hashcatfilelocation".lm.hashes."$main_start_time"
   cracked_lm_hashes=$(cat "$hashcatfilelocation".lm.hashes.cracked."$main_start_time" | wc -l)
   percent_lm_hashes_pre=$(bc <<<"scale=4; $cracked_lm_hashes / $total_lm_hashes")
-  percent_lm_hashes=$(bc <<<"scale=2; $percent_lm_hashes_pre * (100)")
+  percent_lm_hashes=$(bc <<<"scale=2; $percent_lm_hashes_pre * (100)/1")
 }
 
 lmtontlm() {
@@ -86,7 +86,7 @@ ntlmstats() {
   /tools/hashcat/hashcat64.bin -m 1000 --username --show -o "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time" --outfile-format 3 "$hashcatfilelocation".ntlm.hashes."$main_start_time"
   cracked_ntlm_hashes=$(cat "$hashcatfilelocation".ntlm.hashes.cracked."$main_start_time" | wc -l)
   percent_ntlm_hashes_pre=$(bc <<<"scale=4; $cracked_ntml_hashes / $total_hashes")
-  percent_ntlm_hashes=$(bc <<<"scale=2; $percent_ntlm_hashes_pre * (100)")
+  percent_ntlm_hashes=$(bc <<<"scale=2; $percent_ntlm_hashes_pre * (100)/1")
 }
 
 totalstats() {
@@ -155,7 +155,7 @@ printstats() {
 
   #find percent of total hashes cracked
   percent_total_hashes_pre=$(bc <<<"scale=4; $total_cracked_hashes / $total_hashes")
-  percent_total_hashes=$(bc <<<"scale=2; $percent_total_hashes_pre * (100)")
+  percent_total_hashes=$(bc <<<"scale=2; $percent_total_hashes_pre * (100)/1")
   printf \\n | tee -a $stats_output_file
   echo The Percent of Total Hashes Cracked Is: | tee -a $stats_output_file
   echo "$percent_total_hashes%" | tee -a $stats_output_file
@@ -185,8 +185,9 @@ printstats() {
 }
 
 get_html_table_from_pipal() {
+  html_output "<br>"
   echo "<table>"
-  grep "$1" "$hashcatfilelocation".pipalstats."$main_start_time" | sed 's/^/<tr><th>/' | sed 's/$/<\/th><\/tr>/';
+  grep "$1" "$hashcatfilelocation".pipalstats."$main_start_time" | sed 's/^/<tr><th colspan=2>/' | sed 's/$/<\/th><\/tr>/';
   grep "$1" -A 10 "$hashcatfilelocation".pipalstats."$main_start_time" | grep -v "$1" | sed 's/^/<tr><td>/' | sed "s/$2/<\/td><td>/" | sed 's/$/<\/td><\/tr>/';
   echo "</table>"
 }
@@ -210,6 +211,7 @@ print_html_table() {
   html_output "</table>" 
 
   if (($total_lm_hashes > 0)); then
+    html_output "<br>"
     html_output "<table>" 
     html_output "<tr><td>Total LM Hashes</td><td>$total_lm_hashes</td></tr>" 
     html_output "<tr><td>Total LM Cracked Hashes</td><td>$cracked_lm_hashes</td></tr>" 
@@ -221,7 +223,8 @@ print_html_table() {
   echo $(get_html_table_from_pipal "Top 10 passwords" " = ") | tee -a $html_output_file
   echo $(get_html_table_from_pipal "Top 10 base words" " = ") | tee -a $html_output_file
   echo $(get_html_table_from_pipal "Password length (length ordered)" " = ") | tee -a $html_output_file
-
+ 
+  html_output "<br>"
   html_output "<table>" 
   html_output "<tr><td>Only lowercase alpha</td><td>$(get_pipal_stat "Only lowercase alpha")</td></tr>" 
   html_output "<tr><td>Only uppercase alpha</td><td>$(get_pipal_stat "Only uppercase alpha")</td></tr>" 
