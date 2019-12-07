@@ -218,9 +218,9 @@ print_html_table() {
     html_output "</table>" 
   fi
 
-  html_output $(get_html_table_from_pipal "Top 10 passwords" " = ")
-  html_output $(get_html_table_from_pipal "Top 10 base words" " = ")
-  html_output $(get_html_table_from_pipal "Password length (length ordered)" " = ")
+  echo $(get_html_table_from_pipal "Top 10 passwords" " = ") | tee -a $html_output_file
+  echo $(get_html_table_from_pipal "Top 10 base words" " = ") | tee -a $html_output_file
+  echo $(get_html_table_from_pipal "Password length (length ordered)" " = ") | tee -a $html_output_file
 
   html_output "<table>" 
   html_output "<tr><td>Only lowercase alpha</td><td>$(get_pipal_stat "Only lowercase alpha")</td></tr>" 
@@ -229,7 +229,7 @@ print_html_table() {
   html_output "<tr><td>Only numeric</td><td>$(get_pipal_stat "Only numeric")</td></tr>" 
   html_output "</table>" 
 
-  html_output $(get_html_table_from_pipal "Character sets" ": ")
+  echo $(get_html_table_from_pipal "Character sets" ": ") | tee -a $html_output_file
 }
 
 if [ "$#" -eq "0" ]; then
